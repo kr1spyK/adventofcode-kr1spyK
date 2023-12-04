@@ -8,8 +8,8 @@ with open("input2.txt") as fin:
 # line format, colors are random  - eg. Game N: x red, x blue, x green;
 # Game id followed by colon, comma separated counting each rgb cube, each draw separated by semicolon
 cube_limit = {'red': 12, 'green': 13, 'blue': 14}
-id_sum = 0
-power_sum = 0
+valid_ids = []
+power_list = []
 for line in lines:
     gameid = line.find(':')
     draws = line[gameid+2:].strip().split('; ')
@@ -33,7 +33,7 @@ for line in lines:
         ## print()
         drawcount += 1
 
-    id_sum += gameid
+    valid_ids.append(gameid)
 
     # if gameid == 0:
     #     print("invalid")
@@ -48,6 +48,6 @@ for line in lines:
     power = 1
     for x in cube_count.values():
         power *= x
-    power_sum += power
-print("idsum:", id_sum)
-print("powersum:", power_sum)
+    power_list.append(power)
+print("idsum:", sum(valid_ids))
+print("powersum:", sum(power_list))
