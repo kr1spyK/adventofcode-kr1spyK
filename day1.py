@@ -32,4 +32,4 @@ for line in lines:
 
     solution2 += first * 10 + last
 
-print(soltuion1, solution2)
+print(solution1, solution2)
