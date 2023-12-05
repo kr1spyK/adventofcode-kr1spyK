@@ -30,6 +30,6 @@ for line in lines:
     try: last = int(digits[-1])
     except: last = num_words[digits[-1]]
 
-    soltuion2 += first * 10 + last
+    solution2 += first * 10 + last
 
 print(soltuion1, solution2)
