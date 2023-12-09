@@ -27,25 +27,19 @@ maps = [splitcategory(m) for m in maps]
 seeds = maps.pop(0)[1]
 almanac = {cat : list(grouper(nums,3)) for cat, nums in maps}
 
-# LMAO TOO MUCH MEMORY
-for cat, vals in almanac.items():
-    # Sources and destinations are mapped 1:1 so they can be stored in same 'plot'
-    plot = {}
-    for v in vals:
-        dst, src, stp = v
-        for i in range(stp):
-            plot[src + i] = dst + i
-    almanac[cat] = plot
-
+# Part 1 solution - Dynamic solution by getting seeds index if its mapped.
 # Assumes almanac maps are ordered from seed -> ... -> location
 location = []
 for s in seeds:
-    print("current seed:", s)
-    for p in almanac.values():
-        print(p)
-        if s in p: 
-            print(p[s])
-            s = p[s]
-        else: print(s)
+    # print("current seed:", s)
+    for cat in almanac.values():
+        for plot in cat:
+            dst, src, stp = plot
+            if s in range(src, src + stp):
+                # print(s, end=' -> ')
+                s = s-src+dst
+                break
+        # print(s)
     location.append(s)
-print(location, min(location))
+
+print('lowest:', min(location))
