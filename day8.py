@@ -9,30 +9,25 @@ from math import lcm
 
 def tracemap(strt: str) -> int:
     "Takes beginning node and returns number of steps to reach (**Z)"
-    lri = ['L', 'R']
-    dest = 'ZZZ' if strt == 'AAA' else 'Z'
     node = strt
     for i, turn in enumerate(cycle(turns), 1):
-        d = lri.index(turn)
-        node = node_dict[node][d]
-        b = node if dest != 'Z' else node[-1]
-        if b == dest: break
+        node = node_dict[node][turn]
+        if node.endswith('Z'):
+            break
     return i
 
 with open("input8.txt") as fin:
-    turns = fin.readline().strip()
-    nodes = fin.read().strip().splitlines()
+    turns, _, *nodes = fin.read().splitlines()
 
-node_dict = {n[:3]: (n[7:10], n[12:15]) for n in nodes}
+node_dict = {n[:3]: {'L': n[7:10], 'R': n[12:15]} for n in nodes}
 
 # Part 1: Navigate from 'AAA' to 'ZZZ' with the LR string and node map.
 if 'AAA' in node_dict.keys():
-    yuh = tracemap('AAA')
-    print(yuh)
+    print(tracemap('AAA'))
 
 # Part 2: Looks like amount of nodes ending in 'A' (**A) = 'Z' ending nodes.
 # Find number of steps where all nodes reach their destination simultaneously.
-starts = [n for n in node_dict.keys() if n[-1] == 'A']
+starts = [n for n in node_dict.keys() if n.endswith('A')]
 cycles = [tracemap(c) for c in starts]
 
 print(lcm(*cycles))
