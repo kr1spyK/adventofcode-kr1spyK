@@ -5,7 +5,6 @@ Navigate using the map of left-right sequence string 'LR...' and
 Node coordinates 'AAA = (BBB, CCC)'
 '''
 from itertools import cycle
-from functools import reduce
 from math import lcm
 
 def tracemap(strt: str) -> int:
@@ -36,4 +35,4 @@ if 'AAA' in node_dict.keys():
 starts = [n for n in node_dict.keys() if n[-1] == 'A']
 cycles = [tracemap(c) for c in starts]
 
-print(reduce(lcm, cycles))
+print(lcm(*cycles))
